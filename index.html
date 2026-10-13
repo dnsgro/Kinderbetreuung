@@ -42,6 +42,8 @@
   --sun-tag: #FFE3A3;
   --sun-text: #774900;
   --wkend-soft: #F2F5FC;
+  --ot-soft: #DFF4E7;
+  --ot-text: #1B6B3C;
   --wkend-text: #3B5FA2;
   --bar: #3B5FA2;
   --warn: #CC8700;
@@ -81,6 +83,8 @@
     --sun-tag: #4A3814;
     --sun-text: #FFD285;
     --wkend-soft: #1C2239;
+    --ot-soft: #173A27;
+    --ot-text: #8EE3B1;
     --wkend-text: #9DB7EC;
     --bar: #7FA0E8;
     --warn: #F2B53A;
@@ -111,6 +115,8 @@
   --sun-tag: #4A3814;
   --sun-text: #FFD285;
   --wkend-soft: #1C2239;
+  --ot-soft: #173A27;
+  --ot-text: #8EE3B1;
   --wkend-text: #9DB7EC;
   --bar: #7FA0E8;
   --warn: #F2B53A;
@@ -232,6 +238,7 @@ button:disabled { cursor: default; opacity: .45; }
   margin: 0; padding: 10px 14px; border-radius: 12px;
   background: var(--accent-soft); font-size: 15px;
 }
+.ot-line { margin: 0; padding: 8px 12px; border-radius: 12px; background: var(--ot-soft); color: var(--ot-text); font-size: 15px; font-weight: 600; }
 .wage { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; align-content: start; gap: 4px 12px; }
 .wage-label { font-weight: 600; }
 .wage-box { display: flex; align-items: center; gap: 8px; }
@@ -362,6 +369,7 @@ button.day-head:active { background: var(--surface-3); }
   font-size: 12.5px; font-weight: 600; line-height: 1.5; white-space: nowrap; text-overflow: ellipsis;
 }
 .tag-hol { background: var(--sun-tag); color: var(--sun-text); }
+.tag-ot { background: var(--ot-soft); color: var(--ot-text); }
 .closed-note { min-height: 44px; display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 15px; font-weight: 600; }
 .closed-note .ic { width: 18px; height: 18px; }
 
@@ -535,6 +543,20 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
 .ds-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
 .ds-dur { color: var(--muted); font-family: var(--font-num); font-variant-numeric: tabular-nums; }
 
+.ds-total { margin: 10px 0 0; color: var(--muted); font-size: 15px; }
+#otSec { margin-top: 24px; }
+.ds-total b { color: var(--text); font-family: var(--font-num); }
+.ot-show { margin: 0 0 4px; padding: 10px 14px; display: grid; gap: 2px; border-radius: 12px; background: var(--ot-soft); color: var(--ot-text); }
+.ot-show b { font: 700 20px/1.2 var(--font-num); }
+.ot-show span { color: var(--text); font-size: 15px; }
+.ot-quick { margin: 0 0 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.ot-quick button {
+  min-height: 44px; padding: 0 4px; border: 1.5px solid var(--line-strong); border-radius: 12px;
+  background: var(--surface); color: var(--text); font-weight: 600; font-size: 15px;
+}
+.ot-quick button[aria-pressed="true"] { border-color: var(--ot-text); background: var(--ot-soft); color: var(--ot-text); }
+.ot-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
 /* Monatswahl */
 .mp-year { margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 16px; }
 .mp-y { min-width: 70px; text-align: center; font: 700 22px var(--font-num); }
@@ -576,6 +598,10 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
 .ov-m { min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-weight: 600; }
 .ov-num { text-align: right; font-family: var(--font-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .ov-e { font-weight: 600; }
+.ov-m .ov-ot { flex-basis: 100%; color: var(--ot-text); font-size: 11.5px; font-weight: 600; }
+.ov-otrow small { display: block; color: var(--muted); font-size: 12.5px; white-space: normal; }
+.ov-otrow { color: var(--ot-text); font-weight: 600; }
+.ov-stat .ov-sub { display: block; margin: 2px 0 0; color: var(--ot-text); font-weight: 600; }
 .ov-e small { display: block; color: var(--muted); font-size: 11.5px; font-weight: 500; }
 .ov-now, .ov-plan { padding: 0 7px; background: var(--accent-soft); color: var(--accent); font-size: 11.5px; line-height: 1.6; }
 .ov-chev { width: 14px; height: 14px; color: var(--muted); }
@@ -662,7 +688,7 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
   body { padding-bottom: calc(24px + var(--safe-b)); }
   .sumbar { display: none; }
   .panel { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 28px; }
-  .panel-stats, .panel-hint, .panel-actions { grid-column: 1 / -1; }
+  .panel-stats, .panel-hint, .panel-actions, .ot-line { grid-column: 1 / -1; }
   .panel-stats { display: grid; }
   .has-carry .panel-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .panel-actions { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -771,7 +797,8 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
       <div class="stat"><b data-bind="eur">0,00 €</b><span>Verdienst</span></div>
       <div class="stat stat-pay"><b data-bind="pay">0,00 €</b><span>Auszahlung</span></div>
     </div>
-    <p class="panel-hint" id="emptyHint" hidden>Tippe auf eine Schicht, um sie auszuwählen. Mit einem Tipp aufs Datum stellst du einen Tag auf Feiertag oder geschlossen.</p>
+    <p class="panel-hint" id="emptyHint" hidden>Tippe auf eine Schicht, um sie auszuwählen. Mit einem Tipp aufs Datum trägst du Überstunden ein oder stellst den Tag auf Feiertag oder geschlossen.</p>
+    <p class="ot-line" id="otLine" hidden></p>
     <div class="wage">
       <label class="wage-label" for="wage">Stundenlohn</label>
       <div class="wage-box"><input id="wage" type="text" inputmode="decimal" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="done"><span class="wage-unit">€ pro Std.</span></div>
@@ -840,8 +867,9 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
   // ===========================================================================
   const STORE_KEY = 'kibe-schichtplaner';
   const APP_ID = 'kinderbetreuung-schichtplaner';
-  const DATA_VERSION = 2;
-  const APP_VERSION = '1.1';
+  const DATA_VERSION = 3;
+  const APP_VERSION = '1.2';
+  const OT_MAX = 12 * 60; // höchstens 12 Std. Überstunden pro Tag
   const DEFAULT_WAGE = 1390; // Cent pro Stunde
   const DEFAULT_LIMITS = { 2026: 60300, 2027: 63300 }; // Cent pro Monat
   const WD_SHORT = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
@@ -1029,6 +1057,7 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
       wages: {}, // 'JJJJ-MM': Cent pro Stunde (gilt ab diesem Monat)
       limits: { ...DEFAULT_LIMITS }, // 'JJJJ': Cent pro Monat
       carry: { enabled: true, set: {} }, // Übertrag über der Grenze; set: 'JJJJ-MM' → Übertrag zu Monatsbeginn von Hand (Cent)
+      overtime: {}, // 'JJJJ-MM-TT': { min, note } – Überstunden, zählen wie Arbeitszeit
       ics: { title: 'Kinderbetreuung', location: '', alarm: 0, method: 'auto' },
       ui: { theme: 'auto', tipHome: false },
       updated: null,
@@ -1042,6 +1071,8 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     if (v.version > DATA_VERSION) throw new Error('Die Daten stammen aus einer neueren Version dieser App.');
     // Version 1 → 2: Übertrag über der Minijob-Grenze (standardmäßig an)
     if (v.version === 1) { v.carry = { enabled: true, set: {} }; v.version = 2; }
+    // Version 2 → 3: Überstunden pro Tag
+    if (v.version === 2) { v.overtime = {}; v.version = 3; }
     return v;
   }
 
@@ -1108,6 +1139,12 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
       d.carry.enabled = v.carry.enabled !== false;
       if (v.carry.set && typeof v.carry.set === 'object') {
         for (const [k, c] of Object.entries(v.carry.set)) if (/^\d{4}-(0[1-9]|1[0-2])$/.test(k) && Number.isInteger(c) && c >= 0 && c < 1e8) d.carry.set[k] = c;
+      }
+    }
+    if (v.overtime && typeof v.overtime === 'object') {
+      for (const [date, o] of Object.entries(v.overtime)) {
+        if (!isValidDate(date) || !o || !Number.isInteger(o.min) || o.min <= 0 || o.min > OT_MAX) continue;
+        d.overtime[date] = { min: o.min, note: typeof o.note === 'string' ? o.note.slice(0, 200) : '' };
       }
     }
     if (v.ics && typeof v.ics === 'object') {
@@ -1236,15 +1273,19 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     for (const date of Object.keys(data.shifts).sort()) if (date.startsWith(pre)) for (const sel of data.shifts[date]) out.push({ date, sel });
     return out;
   }
+  const otMinOf = (date) => (data.overtime[date] ? data.overtime[date].min : 0);
+  // min = Schichten + Überstunden; Überstunden zählen wie normale Arbeitszeit
   function monthStats(y, m) {
     const pre = monthKey(y, m) + '-';
-    let count = 0, min = 0, exported = 0;
+    let count = 0, shiftMin = 0, exported = 0, otMin = 0, otDays = 0;
     for (const date of Object.keys(data.shifts)) {
       if (!date.startsWith(pre)) continue;
-      for (const x of data.shifts[date]) { count++; min += dur(x); if (x.x) exported++; }
+      for (const x of data.shifts[date]) { count++; shiftMin += dur(x); if (x.x) exported++; }
     }
+    for (const date of Object.keys(data.overtime)) if (date.startsWith(pre)) { otMin += data.overtime[date].min; otDays++; }
+    const min = shiftMin + otMin;
     const wage = wageInfo(y, m).cents;
-    return { count, min, exported, wage, cents: earn(min, wage) };
+    return { count, min, shiftMin, otMin, otDays, exported, wage, cents: earn(min, wage) };
   }
   function yearStats(y) {
     let count = 0, min = 0, cents = 0;
@@ -1267,6 +1308,10 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
       let min = map.get(k) || 0;
       for (const x of data.shifts[date]) min += dur(x);
       map.set(k, min);
+    }
+    for (const date of Object.keys(data.overtime)) {
+      const k = date.slice(0, 7);
+      map.set(k, (map.get(k) || 0) + data.overtime[date].min);
     }
     return map;
   }
@@ -1465,7 +1510,7 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
 
   function weekMinutes(days) {
     let min = 0;
-    for (const d of days) for (const x of selsOf(d)) min += dur(x);
+    for (const d of days) { for (const x of selsOf(d)) min += dur(x); min += otMinOf(d); }
     return min;
   }
   function renderWeek(monday) {
@@ -1530,6 +1575,8 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     if (hol && mode !== 'normal') tags.push(`<span class="tag tag-hol" title="${esc(hol)}">${esc(hol)}</span>`);
     if (hol && mode === 'normal') tags.push(`<span class="tag" title="${esc(hol)}: normal geöffnet">${esc(hol)} (normal geöffnet)</span>`);
     if (!hol && mode === 'holiday') tags.push('<span class="tag tag-hol">Feiertagszeiten</span>');
+    const ot = data.overtime[date];
+    if (ot) tags.push(`<span class="tag tag-ot" title="${esc(ot.note ? `Überstunden: ${ot.note}` : 'Überstunden')}">+${fmtHM(ot.min)} Überstunden</span>`);
 
     const items = dayItems(date);
     let body;
@@ -1597,7 +1644,10 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     bind('dec', `${fmtDec(st.min)} h`);
     bind('eur', fmtEUR(mi.earned));
     bind('pay', fmtEUR(mi.payout));
-    $('#emptyHint').hidden = st.count > 0;
+    $('#emptyHint').hidden = st.count > 0 || st.otMin > 0;
+    const otLine = $('#otLine');
+    otLine.hidden = !st.otMin;
+    otLine.textContent = st.otMin ? `Davon Überstunden: ${fmtHM(st.otMin)} Std. an ${plural(st.otDays, 'Tag', 'Tagen')}.` : '';
 
     const wageEl = $('#wage');
     if (document.activeElement !== wageEl) wageEl.value = fmtMoney(wi.cents);
@@ -1947,7 +1997,8 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     const ok = await ask({
       title: 'Auswahl zurücksetzen?',
       html: `Alle <b>${plural(items.length, 'gewählte Schicht', 'gewählten Schichten')}</b> im ${MONTHS[view.m - 1]} ${view.y} werden entfernt.`
-        + (exp ? `<br><br>${exp === 1 ? 'Eine davon wurde' : `${exp} davon wurden`} schon exportiert. Diese Termine bitte im iOS-Kalender von Hand löschen.` : ''),
+        + (exp ? `<br><br>${exp === 1 ? 'Eine davon wurde' : `${exp} davon wurden`} schon exportiert. Diese Termine bitte im iOS-Kalender von Hand löschen.` : '')
+        + (monthStats(view.y, view.m).otMin ? '<br><br>Eingetragene Überstunden bleiben erhalten.' : ''),
       ok: 'Zurücksetzen',
       danger: true,
     });
@@ -2005,23 +2056,102 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     const list = items.length
       ? items.map((it) => `<div class="ds-row">${chipHTML(date, it)}<span class="ds-dur">${fmtHM(dur(it.sel || it.slot))} Std.</span></div>`).join('')
       : `<p class="muted">${mode === 'closed' ? 'An diesem Tag ist geschlossen.' : 'Für diesen Tag sind keine Schichten geplant.'}</p>`;
+    const dayMin = selsOf(date).reduce((a, x) => a + dur(x), 0) + otMinOf(date);
     $('#sheetBody').innerHTML = `
       ${info.map((t) => `<p class="ds-info">${t}</p>`).join('')}
-      <h3 class="sh" style="margin-top:16px">${range ? `Tagesart vom ${fmtDM(date)} bis ${fmtDM(ctx.until)}` : 'Tagesart'}</h3>
+      <h3 class="sh" style="margin-top:16px">Schichten</h3>
+      <div class="ds-list">${list}</div>
+      ${dayMin ? `<p class="ds-total">Gearbeitet an diesem Tag: <b>${fmtHM(dayMin)} Std.</b>${otMinOf(date) ? ' (inkl. Überstunden)' : ''}</p>` : ''}
+      <section id="otSec" aria-label="Überstunden"><h3 class="sh">Überstunden</h3>${overtimeHTML(ctx)}</section>
+      <h3 class="sh">${range ? `Tagesart vom ${fmtDM(date)} bis ${fmtDM(ctx.until)}` : 'Tagesart'}</h3>
       <div class="seg" role="group" aria-label="Tagesart">${seg}</div>
       <details class="ds-range" id="dsRange"${ctx.rangeOpen ? ' open' : ''}>
         <summary>${icon('chev', 'ic-sm')}Für mehrere Tage festlegen</summary>
         <label class="field">Bis einschließlich<input type="date" id="dsUntil" min="${date}" max="${addDays(date, 365)}" value="${ctx.until}"></label>
         <p class="hint">Zum Beispiel für Betriebsferien: Enddatum wählen und dann oben auf die Tagesart tippen.</p>
-      </details>
-      <h3 class="sh">Schichten</h3>
-      <div class="ds-list">${list}</div>`;
+      </details>`;
     $('#dsRange').addEventListener('toggle', (e) => {
       if (ctx.rangeOpen === e.target.open) return;
       ctx.rangeOpen = e.target.open;
       renderDaySheet();
     });
   }
+  // ---- Überstunden (pro Tag: Dauer + Notiz) ----
+  const OT_QUICK = [15, 30, 45, 60];
+  function overtimeHTML(ctx) {
+    const ot = data.overtime[ctx.date];
+    if (!ctx.otEdit) {
+      if (!ot) {
+        return `<p class="hint">Länger geblieben oder eingesprungen? Trag die zusätzliche Zeit ein – sie zählt wie normale Arbeitszeit zu Stunden und Verdienst.</p>
+          <button type="button" class="btn btn-ghost" data-act="ot-edit">${icon('plus')}Überstunden eintragen</button>`;
+      }
+      return `<div class="ot-show"><b>+${fmtHM(ot.min)} Std.</b>${ot.note ? `<span>${esc(ot.note)}</span>` : ''}</div>
+        <div class="btn-row"><button type="button" class="btn btn-ghost" data-act="ot-edit">Ändern</button><button type="button" class="btn btn-quiet" data-act="ot-del">Löschen</button></div>`;
+    }
+    const d = ctx.otDraft;
+    const cur = d.h * 60 + d.m;
+    const mins = Array.from({ length: 12 }, (_, i) => i * 5);
+    if (!mins.includes(d.m)) mins.push(d.m), mins.sort((a, b) => a - b);
+    return `<div class="ot-quick" role="group" aria-label="Schnellauswahl">${OT_QUICK.map((q) => `<button type="button" data-act="ot-quick" data-min="${q}" aria-pressed="${cur === q}">${q < 60 ? `${q} Min.` : '1 Std.'}</button>`).join('')}</div>
+      <div class="ot-pick">
+        <label class="field">Stunden<select id="otH">${Array.from({ length: 13 }, (_, h) => `<option value="${h}"${h === d.h ? ' selected' : ''}>${h}</option>`).join('')}</select></label>
+        <label class="field">Minuten<select id="otM">${mins.map((m) => `<option value="${m}"${m === d.m ? ' selected' : ''}>${pad2(m)}</option>`).join('')}</select></label>
+      </div>
+      <label class="field">Notiz (optional)<input type="text" id="otNote" maxlength="200" autocomplete="off" value="${esc(d.note)}" placeholder="z. B. Kollegin vertreten"></label>
+      <p class="hint is-error" id="otErr" hidden></p>
+      <div class="btn-row"><button type="button" class="btn btn-primary" data-act="ot-save">Speichern</button><button type="button" class="btn btn-ghost" data-act="ot-cancel">Abbrechen</button></div>`;
+  }
+  function otStartEdit() {
+    const ctx = sheetCtx;
+    const ot = data.overtime[ctx.date];
+    ctx.otEdit = true;
+    ctx.otDraft = ot ? { h: Math.floor(ot.min / 60), m: ot.min % 60, note: ot.note } : { h: 0, m: 30, note: '' };
+    renderDaySheet();
+    const sec = $('#otSec');
+    if (sec) sec.scrollIntoView({ block: 'nearest', behavior: smooth() });
+  }
+  function otSyncQuick() {
+    const d = sheetCtx.otDraft;
+    $$('[data-act="ot-quick"]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.min === d.h * 60 + d.m)));
+  }
+  function otQuick(min) {
+    const d = sheetCtx.otDraft;
+    d.h = Math.floor(min / 60);
+    d.m = min % 60;
+    $('#otH').value = String(d.h);
+    $('#otM').value = String(d.m);
+    otSyncQuick();
+  }
+  function otSave() {
+    const ctx = sheetCtx;
+    const d = ctx.otDraft;
+    const min = d.h * 60 + d.m;
+    if (!(min > 0 && min <= OT_MAX)) {
+      const e = $('#otErr');
+      e.textContent = 'Bitte eine Dauer größer als 0 wählen.';
+      e.hidden = false;
+      return;
+    }
+    const snap = snapshot();
+    data.overtime[ctx.date] = { min, note: d.note.trim().slice(0, 200) };
+    ctx.otEdit = false;
+    save();
+    refreshDay(ctx.date);
+    renderSummary();
+    toast(`Überstunden am ${fmtDM(ctx.date)}: +${fmtHM(min)} Std.`, { action: 'Rückgängig', onAction: () => restore(snap) });
+  }
+  function otDelete() {
+    const ctx = sheetCtx;
+    if (!data.overtime[ctx.date]) return;
+    const snap = snapshot();
+    delete data.overtime[ctx.date];
+    ctx.otEdit = false;
+    save();
+    refreshDay(ctx.date);
+    renderSummary();
+    toast('Überstunden gelöscht.', { action: 'Rückgängig', onAction: () => restore(snap) });
+  }
+
   function onUntilChange(input) {
     const ctx = sheetCtx;
     if (!ctx || ctx.type !== 'day') return;
@@ -2149,9 +2279,9 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
         const mi = monthMoney(L, y, m);
         min += mi.min; earned += mi.earned; paid += mi.payout;
         const showPay = carryOn && mi.payout !== mi.earned;
-        const label = `${MONTHS[m - 1]} ${y}: ${fmtHM(mi.min)} Stunden, Stundenlohn ${fmtMoney(mi.wage)} Euro, verdient ${fmtEUR(mi.earned)}${showPay ? `, ausgezahlt ${fmtEUR(mi.payout)}` : ''}. Details anzeigen`;
-        return `<button type="button" class="ov-row${st.count ? '' : ' is-empty'}" data-act="ov-open" data-key="${k}" aria-label="${esc(label)}">`
-          + `<span class="ov-m">${MONTHS[m - 1]}${k === nowKey ? '<span class="tag ov-now">läuft</span>' : ''}</span>`
+        const label = `${MONTHS[m - 1]} ${y}: ${fmtHM(mi.min)} Stunden${st.otMin ? `, davon ${fmtHM(st.otMin)} Überstunden` : ''}, Stundenlohn ${fmtMoney(mi.wage)} Euro, verdient ${fmtEUR(mi.earned)}${showPay ? `, ausgezahlt ${fmtEUR(mi.payout)}` : ''}. Details anzeigen`;
+        return `<button type="button" class="ov-row${st.count || st.otMin ? '' : ' is-empty'}" data-act="ov-open" data-key="${k}" aria-label="${esc(label)}">`
+          + `<span class="ov-m">${MONTHS[m - 1]}${k === nowKey ? '<span class="tag ov-now">läuft</span>' : ''}${st.otMin ? `<small class="ov-ot">+${fmtHM(st.otMin)} Überstd.</small>` : ''}</span>`
           + `<span class="ov-num">${fmtHM(mi.min)}</span>`
           + `<span class="ov-num">${fmtMoney(mi.wage)} €</span>`
           + `<span class="ov-num ov-e">${fmtEUR(mi.earned)}${showPay ? `<small>ausgez. ${fmtEUR(mi.payout)}</small>` : ''}</span>`
@@ -2186,33 +2316,41 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
       if (mi.carryOut) money += `<div><span>Übertrag in den ${MONTHS[m % 12]}</span><b>${fmtEUR(mi.carryOut)}</b></div>`;
     }
 
-    // Tabelle: eine Zeile pro Schicht, Datum nur in der ersten Zeile eines Tages
+    // Tabelle: eine Zeile pro Schicht bzw. Überstunden, Datum nur in der ersten Zeile eines Tages
+    const pre = monthKey(y, m) + '-';
     const byDay = new Map();
-    for (const it of items) { if (!byDay.has(it.date)) byDay.set(it.date, []); byDay.get(it.date).push(it.sel); }
+    const push = (date, row) => { if (!byDay.has(date)) byDay.set(date, []); byDay.get(date).push(row); };
+    for (const it of items) push(it.date, { sel: it.sel, min: dur(it.sel) });
+    for (const date of Object.keys(data.overtime)) if (date.startsWith(pre)) push(date, { ot: data.overtime[date], min: data.overtime[date].min });
     let rows = '';
-    for (const [date, sels] of byDay) {
+    for (const date of [...byDay.keys()].sort()) {
+      const list = byDay.get(date);
       const hol = holidayName(date);
-      const dayMin = sels.reduce((a, x) => a + dur(x), 0);
+      const dayMin = list.reduce((a, r) => a + r.min, 0);
       const notes = [];
       if (hol) notes.push(esc(hol));
-      if (sels.length > 1) notes.push(`zusammen ${fmtHM(dayMin)} Std.`);
+      if (list.length > 1) notes.push(`zusammen ${fmtHM(dayMin)} Std.`);
       const flag = date > today ? '<span class="tag ov-plan">geplant</span>' : date === today ? '<span class="tag ov-plan">heute</span>' : '';
-      rows += '<tbody>' + sels.map((x, i) => `<tr>${i === 0 ? `<td class="ov-day" rowspan="${sels.length}"><b>${fmtDateShort(date)}</b>${flag}${notes.map((n) => `<small>${n}</small>`).join('')}</td>` : ''}`
-        + `<td class="ov-shift">${x.s}–${x.e}</td><td class="ov-hrs">${fmtHM(dur(x))}</td></tr>`).join('') + '</tbody>';
+      rows += '<tbody>' + list.map((r, i) => `<tr>${i === 0 ? `<td class="ov-day" rowspan="${list.length}"><b>${fmtDateShort(date)}</b>${flag}${notes.map((n) => `<small>${n}</small>`).join('')}</td>` : ''}`
+        + (r.sel
+          ? `<td class="ov-shift">${r.sel.s}–${r.sel.e}</td><td class="ov-hrs">${fmtHM(r.min)}</td>`
+          : `<td class="ov-shift ov-otrow">Überstunden${r.ot.note ? `<small>${esc(r.ot.note)}</small>` : ''}</td><td class="ov-hrs">+${fmtHM(r.min)}</td>`)
+        + '</tr>').join('') + '</tbody>';
     }
-    const table = items.length
+    const what = `${plural(st.count, 'Schicht', 'Schichten')}${st.otMin ? ' und Überstunden' : ''}`;
+    const table = byDay.size
       ? `<table class="ov-table">
           <caption class="sr-only">Schichten im ${MONTHS[m - 1]} ${y}</caption>
           <thead><tr><th scope="col">Tag</th><th scope="col">Schicht</th><th scope="col">Std.</th></tr></thead>
           ${rows}
-          <tfoot><tr><td colspan="2">${plural(st.count, 'Schicht', 'Schichten')} an ${plural(byDay.size, 'Tag', 'Tagen')}</td><td class="ov-hrs">${fmtHM(st.min)}</td></tr></tfoot>
+          <tfoot><tr><td colspan="2">${what} an ${plural(byDay.size, 'Tag', 'Tagen')}</td><td class="ov-hrs">${fmtHM(st.min)}</td></tr></tfoot>
         </table>`
       : '<p class="ov-empty">In diesem Monat wurden keine Schichten ausgewählt.</p>';
 
     $('#sheetBody').innerHTML = `
       <div class="ov-stats">
         <div class="ov-stat"><span>Stundenlohn</span><b>${fmtMoney(mi.wage)} €</b></div>
-        <div class="ov-stat"><span>Gearbeitet</span><b>${fmtHM(mi.min)} Std.</b><small>${fmtDec(mi.min)} h</small></div>
+        <div class="ov-stat"><span>Gearbeitet</span><b>${fmtHM(mi.min)} Std.</b><small>${fmtDec(mi.min)} h</small>${st.otMin ? `<small class="ov-sub">inkl. ${fmtHM(st.otMin)} Std. Überstunden</small>` : ''}</div>
         <div class="ov-stat"><span>Schichten</span><b>${st.count}</b></div>
         <div class="ov-stat"><span>Verdient</span><b>${fmtEUR(mi.earned)}</b></div>
       </div>
@@ -2385,7 +2523,8 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
         <ul class="help">
           <li>Schicht antippen: auswählen oder wieder abwählen.</li>
           <li>Kalender-Symbol an einer gewählten Schicht: Termin in den Kalender übernehmen. Ein Häkchen zeigt, dass sie schon exportiert wurde.</li>
-          <li>Datum antippen: Tag auf normal, Feiertag oder geschlossen stellen – auch für mehrere Tage.</li>
+          <li>Datum antippen: Überstunden eintragen und den Tag auf normal, Feiertag oder geschlossen stellen – auch für mehrere Tage.</li>
+          <li>Überstunden zählen wie normale Arbeitszeit zu Stunden, Verdienst und Minijob-Grenze.</li>
           <li>Balken-Symbol oben: Übersicht aller bisherigen Monate mit Stundenlohn, Stunden und Verdienst, ein Tipp zeigt die einzelnen Schichten.</li>
           <li>Verdienst = Stunden × Stundenlohn, ohne Pausenabzug.</li>
           <li>Über der Minijob-Grenze wird höchstens die Grenze ausgezahlt, der Rest geht als Übertrag in den nächsten Monat. „Übertrag anpassen“ in der Monatsübersicht übernimmt den Stand aus der Lohnabrechnung.</li>
@@ -2745,6 +2884,11 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     'backup-load': () => $('#importFile').click(),
     wipe: () => wipeAll(),
     overview: () => openOverview(),
+    'ot-edit': () => otStartEdit(),
+    'ot-quick': (t) => otQuick(+t.dataset.min),
+    'ot-save': () => otSave(),
+    'ot-cancel': () => { sheetCtx.otEdit = false; renderDaySheet(); },
+    'ot-del': () => otDelete(),
     'ov-open': (t) => {
       sheetCtx.listScroll = $('#sheetBody').scrollTop;
       sheetCtx.view = 'detail';
@@ -2766,7 +2910,7 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     'carry-reset': () => { const key = sheetCtx.key; closeSheet(true); carryReset(key); },
     'carry-del': (t) => { carryReset(t.dataset.key); const box = $('#carryRows'); if (box) box.innerHTML = carryRowsHTML(); },
   };
-  const SHEET_ACTIONS = new Set(['mp-year', 'set-mode', 'exp-which', 'exp-go', 'pe-add', 'pe-del', 'pe-save', 'pe-discard', 'pe-new', 'pe-delete', 'pe-defaults', 'carry-save', 'carry-reset', 'ov-open', 'sheet-back', 'ov-goto']);
+  const SHEET_ACTIONS = new Set(['mp-year', 'set-mode', 'exp-which', 'exp-go', 'pe-add', 'pe-del', 'pe-save', 'pe-discard', 'pe-new', 'pe-delete', 'pe-defaults', 'carry-save', 'carry-reset', 'ov-open', 'sheet-back', 'ov-goto', 'ot-edit', 'ot-quick', 'ot-save', 'ot-cancel', 'ot-del']);
 
   document.addEventListener('click', (ev) => {
     const t = ev.target.closest('[data-act]');
@@ -2781,6 +2925,7 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
   document.addEventListener('input', (ev) => {
     const t = ev.target;
     if (t.dataset.pd === 's' || t.dataset.pd === 'e' || t.dataset.pd === 'from') onPlanInput(t);
+    else if (t.id === 'otNote' && sheetCtx && sheetCtx.otDraft) sheetCtx.otDraft.note = t.value;
     else if (t.dataset.set === 'ics-title') { data.ics.title = t.value.slice(0, 120); save(); }
     else if (t.dataset.set === 'ics-location') { data.ics.location = t.value.slice(0, 200); save(); }
   });
@@ -2789,6 +2934,10 @@ dialog.is-fallback { position: fixed; inset: 0; z-index: 100; box-shadow: 0 0 0 
     if (t.id === 'wage') commitWage();
     else if (t.id === 'importFile') { const f = t.files && t.files[0]; t.value = ''; if (f) importBackup(f); }
     else if (t.id === 'dsUntil') onUntilChange(t);
+    else if ((t.id === 'otH' || t.id === 'otM') && sheetCtx && sheetCtx.otDraft) {
+      sheetCtx.otDraft[t.id === 'otH' ? 'h' : 'm'] = +t.value;
+      otSyncQuick();
+    }
     else if (t.dataset.pd === 'ver') onVersionChange(t);
     else if (t.dataset.pd) onPlanInput(t);
     else if (t.dataset.set === 'ics-alarm') { data.ics.alarm = +t.value; save(); }
